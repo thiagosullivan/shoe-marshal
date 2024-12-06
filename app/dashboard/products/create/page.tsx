@@ -198,7 +198,7 @@ export default function ProductCreateRoute() {
           </div>
         </CardContent>
         <CardFooter>
-          <SubmitButtons />
+          <SubmitButtons text="Create Product" />
         </CardFooter>
       </Card>
     </form>
