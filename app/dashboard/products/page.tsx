@@ -31,7 +31,7 @@ export default function ProductsPage() {
     <>
       <div className="flex items-center justify-end">
         <Button asChild className="flex items-center gap-x-2">
-          <Link href="/dashboard/product/create">
+          <Link href="/dashboard/products/create">
             <PlusCircle className="w-3.5 h-3.5" />
             <span>Add Product</span>
           </Link>
