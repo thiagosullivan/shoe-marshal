@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from "tailwindcss";
 import { withUt } from "uploadthing/tw";
 
@@ -60,7 +61,13 @@ const config = {
     },
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  plugins: [require("tailwindcss-animate")],
+  corePlugins: {
+    aspectRatio: false,
+  },
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/aspect-ratio"),
+  ],
 } satisfies Config;
 
 export default withUt(config);
