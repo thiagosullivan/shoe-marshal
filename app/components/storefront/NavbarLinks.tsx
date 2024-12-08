@@ -8,7 +8,7 @@ export const navbarLinks = [
   },
   {
     id: 1,
-    name: "All Procuts",
+    name: "All Products",
     href: "/products/all",
   },
   {
