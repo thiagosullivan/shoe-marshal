@@ -172,7 +172,6 @@ export async function addItem(productId: string) {
   if (!selectedProduct) {
     throw new Error("No product with this id");
   }
-
   let myCart = {} as Cart;
 
   if (!cart || !cart.items) {
@@ -269,6 +268,9 @@ export async function checkOut() {
       line_items: lineItems,
       success_url: "http://localhost:3000/payment/success",
       cancel_url: "http://localhost:3000/payment/cancel",
+      metadata: {
+        userId: user.id,
+      },
     });
 
     return redirect(session.url as string);
