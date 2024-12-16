@@ -13,9 +13,35 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import prisma from "@/lib/db";
 import React from "react";
 
-export default function OrdersPage() {
+async function getData() {
+  const data = await prisma.order.findMany({
+    select: {
+      amount: true,
+      createdAt: true,
+      status: true,
+      id: true,
+      User: {
+        select: {
+          firstName: true,
+          email: true,
+          profileImage: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return data;
+}
+
+export default async function OrdersPage() {
+  const data = await getData();
+
   return (
     <Card>
       <CardHeader className="px-7">
@@ -34,18 +60,24 @@ export default function OrdersPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>
-                <p className="font-medium">Jan Marshal</p>
-                <p className="hidden md:flex text-sm text-muted-foreground">
-                  teste@teste.com
-                </p>
-              </TableCell>
-              <TableCell>Sale</TableCell>
-              <TableCell>Successfull</TableCell>
-              <TableCell>2024-06-15</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
-            </TableRow>
+            {data.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell>
+                  <p className="font-medium">{item.User?.firstName}</p>
+                  <p className="hidden md:flex text-sm text-muted-foreground">
+                    {item.User?.email}
+                  </p>
+                </TableCell>
+                <TableCell>Order</TableCell>
+                <TableCell>{item.status}</TableCell>
+                <TableCell>
+                  {new Intl.DateTimeFormat("pt-BR").format(item.createdAt)}
+                </TableCell>
+                <TableCell className="text-right">
+                  ${new Intl.NumberFormat("pt-BR").format(item.amount / 100)}
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </CardContent>
